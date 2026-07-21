@@ -1,7 +1,41 @@
 import os
+import random
 from groq import Groq
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
+
+TOPICS = [
+    # Real unsolved mysteries
+    "The Mary Celeste Mystery",
+    "The Dyatlov Pass Incident",
+    "The Bermuda Triangle Disappearances",
+    "The Roanoke Colony Vanishing",
+    "The Flannan Isles Lighthouse Mystery",
+    "The Voynich Manuscript",
+    "The Somerton Man Mystery",
+    "The Taos Hum",
+    "The Max Headroom Broadcast Incident",
+    "The Disappearance of Amelia Earhart",
+    "The Zodiac Killer's Unsolved Ciphers",
+    "The Isdal Woman Mystery",
+    "The Sodder Children Disappearance",
+    "The Lead Masks Case",
+    "The Hinterkaifeck Murders",
+
+    # Classic public-domain mystery/horror fiction
+    "The Murders in the Rue Morgue (Edgar Allan Poe)",
+    "The Tell-Tale Heart (Edgar Allan Poe)",
+    "The Fall of the House of Usher (Edgar Allan Poe)",
+    "The Red-Headed League (Arthur Conan Doyle)",
+    "The Speckled Band (Arthur Conan Doyle)",
+    "The Hound of the Baskervilles (Arthur Conan Doyle)",
+    "A Jury of Her Peers (Susan Glaspell)",
+    "The Monkey's Paw (W.W. Jacobs)",
+    "The Turn of the Screw (Henry James)",
+    "The Yellow Wallpaper (Charlotte Perkins Gilman)",
+    "Dracula's Guest (Bram Stoker)",
+    "The Legend of Sleepy Hollow (Washington Irving)",
+]
 
 def generate_script(topic):
     prompt = f"""
@@ -25,8 +59,8 @@ Tone: গম্ভীর, ধীর, suspenseful। Topic-এ যতটা ত�
     return response.choices[0].message.content
 
 if __name__ == "__main__":
-    topic = "The Mary Celeste Mystery"
+    topic = random.choice(TOPICS)
     script = generate_script(topic)
     with open("output_script.txt", "w", encoding="utf-8") as f:
-        f.write(script)
-    print("Script generated and saved!")
+        f.write(f"TOPIC: {topic}\n\n{script}")
+    print(f"Script generated for topic: {topic}")
