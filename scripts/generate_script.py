@@ -1,8 +1,7 @@
 import os
-import google.generativeai as genai
+from groq import Groq
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-2.0-flash")
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 def generate_script(topic):
     prompt = f"""
@@ -19,8 +18,11 @@ Format:
 
 Tone: গম্ভীর, ধীর, suspenseful। মোট length এমন হবে যাতে ৫+ মিনিট narration হয় (কমপক্ষে ৮০০-১০০০ শব্দ)।
 """
-    response = model.generate_content(prompt)
-    return response.text
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response.choices[0].message.content
 
 if __name__ == "__main__":
     topic = "The Mary Celeste Mystery"
