@@ -16,7 +16,7 @@ Format:
 [তত্ত্ব ও রহস্য] - বিভিন্ন theory, অতিপ্রাকৃত angle সহ
 [উপসংহার] - রহস্যময়, খোলা প্রশ্ন রেখে শেষ করো
 
-Tone: গম্ভীর, ধীর, suspenseful। মোট length এমন হবে যাতে ৫+ মিনিট narration হয় (কমপক্ষে ৮০০-১০০০ শব্দ)।
+Tone: গম্ভীর, ধীর, suspenseful। Topic-এ যতটা তথ্য/রহস্য আছে তার উপর ভিত্তি করে script-এর length নিজে থেকে ঠিক করো — সাধারণত ৪-১০ মিনিট narration (৬০০-১৫০০ শব্দ)-এর মধ্যে, তবে টেনে লম্বা করার দরকার নেই যদি topic-এ যথেষ্ট material না থাকে।
 """
     response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
