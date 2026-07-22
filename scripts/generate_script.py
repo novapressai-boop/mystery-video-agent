@@ -5,7 +5,6 @@ from groq import Groq
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
 
 TOPICS = [
-    # Real unsolved mysteries
     "The Mary Celeste Mystery",
     "The Dyatlov Pass Incident",
     "The Bermuda Triangle Disappearances",
@@ -21,8 +20,6 @@ TOPICS = [
     "The Sodder Children Disappearance",
     "The Lead Masks Case",
     "The Hinterkaifeck Murders",
-
-    # Classic public-domain mystery/horror fiction
     "The Murders in the Rue Morgue (Edgar Allan Poe)",
     "The Tell-Tale Heart (Edgar Allan Poe)",
     "The Fall of the House of Usher (Edgar Allan Poe)",
@@ -39,7 +36,8 @@ TOPICS = [
 
 def generate_script(topic):
     prompt = f"""
-তুমি একজন horror/mystery YouTube script writer।
+তুমি একজন অভিজ্ঞ horror/mystery YouTube script writer, যে স্বাভাবিক, প্রাণবন্ত ভাষায় গল্প বলে — কোনো বাক্য বা বাক্যাংশ বারবার repeat করে না।
+
 নিচের topic নিয়ে বাংলায় একটি ভয়ানক, suspenseful narration script লেখো।
 Topic: {topic}
 
@@ -48,7 +46,13 @@ Format:
 [পটভূমি] - ঘটনার background
 [মূল ঘটনা] - বিস্তারিত রহস্যময় ঘটনা
 [তত্ত্ব ও রহস্য] - বিভিন্ন theory, অতিপ্রাকৃত angle সহ
-[উপসংহার] - রহস্যময়, খোলা প্রশ্ন রেখে শেষ করো
+[উপসংহার] - রহস্যময়, খোলা প্রশ্ন রেখে শেষ করো (একটাই শক্তিশালী বাক্যে শেষ করো, একই কথা বারবার না বলে)
+
+গুরুত্বপূর্ণ নিয়ম:
+- একই বাক্য, বাক্যাংশ বা ধারণা কখনো দুইবার বলবে না
+- প্রতিটা বাক্য নতুন তথ্য বা অনুভূতি যোগ করবে, শুধু আগেরটা ঘুরিয়ে বলবে না
+- সাধারণ কথ্য, স্বাভাবিক বাংলায় লিখবে (যেন কেউ সামনে বসে গল্প বলছে), অতিরিক্ত formal/বইয়ের ভাষা এড়িয়ে চলবে
+- মাঝে মাঝে ছোট, punchy বাক্য ব্যবহার করবে suspense তৈরি করতে
 
 Tone: গম্ভীর, ধীর, suspenseful। Topic-এ যতটা তথ্য/রহস্য আছে তার উপর ভিত্তি করে script-এর length নিজে থেকে ঠিক করো — সাধারণত ৪-১০ মিনিট narration (৬০০-১৫০০ শব্দ)-এর মধ্যে, তবে টেনে লম্বা করার দরকার নেই যদি topic-এ যথেষ্ট material না থাকে।
 """
