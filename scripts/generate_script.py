@@ -1,10 +1,10 @@
 import os
 import random
-import re
 import requests
 from groq import Groq
 
 client = Groq(api_key=os.environ["GROQ_API_KEY"])
+HEADERS = {"User-Agent": "MysteryVideoAgent/1.0 (contact: example@example.com)"}
 
 REAL_MYSTERIES = [
     "Mary Celeste",
@@ -26,10 +26,12 @@ REAL_MYSTERIES = [
 
 def fetch_wikipedia_summary(title):
     url = f"https://en.wikipedia.org/api/rest_v1/page/summary/{title.replace(' ', '_')}"
-    r = requests.get(url, timeout=15)
+    r = requests.get(url, headers=HEADERS, timeout=15)
     if r.status_code == 200:
-        data = r.json()
-        return data.get("extract", "")
+        try:
+            return r.json().get("extract", "")
+        except Exception:
+            return ""
     return ""
 
 def fetch_wikipedia_full(title):
@@ -41,10 +43,13 @@ def fetch_wikipedia_full(title):
         "titles": title,
         "format": "json",
     }
-    r = requests.get(url, params=params, timeout=15)
-    pages = r.json().get("query", {}).get("pages", {})
-    for page in pages.values():
-        return page.get("extract", "")[:6000]
+    r = requests.get(url, params=params, headers=HEADERS, timeout=15)
+    try:
+        pages = r.json().get("query", {}).get("pages", {})
+        for page in pages.values():
+            return page.get("extract", "")[:6000]
+    except Exception:
+        return ""
     return ""
 
 def generate_script(topic, source_text):
@@ -83,6 +88,8 @@ if __name__ == "__main__":
     source_text = fetch_wikipedia_full(topic)
     if not source_text:
         source_text = fetch_wikipedia_summary(topic)
+    if not source_text:
+        source_text = f"({topic} সম্পর্কে বিস্তারিত তথ্য পাওয়া যায়নি, সাধারণ জ্ঞান থেকে লেখো)"
     script = generate_script(topic, source_text)
     with open("output_script.txt", "w", encoding="utf-8") as f:
         f.write(f"TOPIC: {topic}\n\n{script}")
