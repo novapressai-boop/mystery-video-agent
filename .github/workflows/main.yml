@@ -15,7 +15,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install groq edge-tts
+        run: pip install groq edge-tts requests
 
       - name: Run script generator
         env:
