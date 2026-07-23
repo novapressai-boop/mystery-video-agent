@@ -25,6 +25,9 @@ jobs:
       - name: Run voice generator
         run: python scripts/generate_voice.py
 
+      - name: Run video generator
+        run: python scripts/generate_video.py
+
       - name: Upload results
         uses: actions/upload-artifact@v4
         with:
@@ -32,3 +35,4 @@ jobs:
           path: |
             output_script.txt
             output_audio.mp3
+            output_video.mp4
